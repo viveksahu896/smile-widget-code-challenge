@@ -41,3 +41,8 @@ The Smile Widget Company currently sells two types of smile widgets: a Big Widge
 ### Additional Information
 * Please use Django Rest Framework or a Python web framework of your choice to create the endpoint.
 * Just as a general guideline, we've designed this exercise to take less than 4 hours.
+
+### Price Calculator
+* To see the price of product hit the url /api/get-price/ with host name in starting and pass the parameters like date, productCode, giftCardCode where giftCardCode is a optional parameter
+    * Eaxmple url `"http://127.0.0.1:8000/api/get-price/?productCode=sm_widget&date=January 1, 2018&giftCardCode=10OFF"`
+    * Date format should be like `"January 1, 2018"`
