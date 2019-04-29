@@ -4,7 +4,16 @@ from rest_framework.views import APIView
 from .models import ProductPrice, GiftCard, Product
 
 
-class ProductPriceView(APIView):
+class ProductPriceCalculatorView(APIView):
+
+    """
+    get:
+    Return price of the product, based on input parameter(s)
+    convert_date:
+    Return Python's date object, need input date in format Month Date, Year(November 23, 2019)
+    price_after_discount:
+    Return price after discount
+    """
 
     def get(self, request, *args, **kwargs):
         date = request.GET.get('date')
@@ -20,13 +29,16 @@ class ProductPriceView(APIView):
             day = None
             month = None
         # Filter based on product type
-        product_price_filter_by_code = ProductPrice.objects.filter(product__code=productCode)
+        product_price_filter_by_code = ProductPrice.objects.filter(
+            product__code=productCode)
         # Filter for dates
         if month == 11 and day in [23, 24, 25]:
-            product_price = product_price_filter_by_code.filter(price_schedule_from__day=day, price_schedule_from__month=month)
+            product_price = product_price_filter_by_code.filter(
+                price_schedule_from__day=day, price_schedule_from__month=month)
             price = product_price[0].special_price
         elif date and date >= self.convert_date('January 1, 2019') and month != 11 and day not in [23, 24, 25]:
-            product_price = product_price_filter_by_code.filter(price_schedule_from__gte=date)
+            product_price = product_price_filter_by_code.filter(
+                price_schedule_from__gte=date)
             price = product_price[0].special_price
         else:
             product = Product.objects.get(code=productCode)

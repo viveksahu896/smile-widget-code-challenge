@@ -17,6 +17,7 @@ The Smile Widget Company currently sells two types of smile widgets: a Big Widge
   * `>>> python manage.py migrate`
 6. Load data from fixtures:
   * `>>> python manage.py loaddata 0001_fixtures.json`
+  * `>>> python manage.py loaddata 0002_fixtures.json`
 
 ### Technical Requirements
 * We currently have to products with the following prices:
@@ -42,7 +43,24 @@ The Smile Widget Company currently sells two types of smile widgets: a Big Widge
 * Please use Django Rest Framework or a Python web framework of your choice to create the endpoint.
 * Just as a general guideline, we've designed this exercise to take less than 4 hours.
 
+### Run Application
+* After complete all setup in above steps, To run the application on your local machine, Please use command * `>>> python manage.py runserver`
+
 ### Price Calculator
-* To see the price of product hit the url /api/get-price/ with host name in starting and pass the parameters like date, productCode, giftCardCode where giftCardCode is a optional parameter
-    * Eaxmple url `"http://127.0.0.1:8000/api/get-price/?productCode=sm_widget&date=January 1, 2018&giftCardCode=10OFF"`
+* API to get the product price is `"/api/get-price/"` which requires three parameters (Returns response in JSON format)
+  * productCode
+  * date (Optional)
+  * CardCode (Optional)
     * Date format should be like `"January 1, 2018"`
+* Sample parameters and their response
+  * productCode=sm_widget, date=January 1, 2018 and giftCardCode=10OFF (Standard)
+    * 89.0
+  * productCode=big_widget, date=January 2, 2019 and giftCardCode=10OFF (From 2019)
+    * 1190.0
+  * productCode=sm_widget, date=November 23, 2018 and giftCardCode=10OFF (Good Fridays)
+    * FREE!
+  * productCode=sm_widget (For small widget)
+    * 99.0
+  * productCode=big_widget, date=January 1, 2018 (Without Offer)
+    * 1000.0
+* Eaxmple url `"http://127.0.0.1:8000/api/get-price/?productCode=sm_widget&date=November 23, 2019&giftCardCode=10OFF"`
